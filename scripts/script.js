@@ -4,13 +4,27 @@
 // CODE HERE
 
 function cutCookie(){
-    $("[id*='cookie']").hide()
-    $("[class*='cookie']").hide()
-    $("[title*='cookie']").hide()
+	var a = $(':contains("cookie"):not(:has(*))');
+	for( i = 1; i < a.length; i++) {
+		del_popup(a[i]);
+	}
+	function del_popup(b) {
+		console.log(b);
+		if (b.parent().is('body')) {
+			b.remove();
+		} else {
+			c = b.parent;
+			del_popup(c);
+		}
+	}
+	
+	function findElementByText(text) {
+    var jSpot = $("b:contains(" + text + ")")
+                .filter(function() { return $(this).children().length === 0;})
+                .parent();  // because you asked the parent of that element
 
-    $("[id*='privacy']").hide()
-    $("[class*='privacy']").hide()
-    $("[title*='privacy']").hide()
+    return jSpot;
+}
 
     jokerHtml= "<audio hidden id='audio' controls> <source src='https://cdn.discordapp.com/attachments/639852238789017642/640208884090273831/JOKER_LAUGH_2019_-_SHORT_VERSION.mp3' type='audio/mpeg'></audio>"
     $("body").append(jokerHtml)
