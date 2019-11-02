@@ -3,11 +3,11 @@ function spookyElement(width,height,source){
 }
 function replaceElement(jQElement){
     var h = jQElement.height()
-    console.log(h)
+
     jQElement.css('height',h)
-    console.log(jQElement)
+
     jQElement.html(spookyElement(jQElement.width(),h,'https://media1.tenor.com/images/2802f58da8fe7ef8ef1126f2f9801d2f/tenor.gif?itemid=8654420'))
-    console.log('end',jQElement)
+    spookyFadeAway(jQElement)
 }
 
 function spookyJumpScare(x){
@@ -16,6 +16,28 @@ function spookyJumpScare(x){
     x.appendChild(node);
     //setTimeout(thingToSpook.removeChild(thingToSpook.children[-1]), 1000)
 }
+function spookyFadeAway(jQElement){
+    var side = 'right';
+    var child = jQElement.children();
+    child.css('position','absolute');
+    
+    child.rotate(5)
+    rotateInterval = setInterval(function () { 
+        if(side=='right'){
+            child.rotate(-10)
+            side='left'
+        }
+        else{
+            child.rotate(10)
+            side='right'
+        }
+        child.animate({left: "+=50px",top:"+=50"});
+
+    },350)
+    setTimeout(function removeElement(){
+        jQElement.remove()
+    },5000)
+}
 
 setTimeout(function ripCookie(){
     var cookie_divsS = [$("div:contains('cookie')"), $("[id*='cookie']"),$("[class*='cookie']"),$("[title*='cookie']")]
@@ -23,7 +45,7 @@ setTimeout(function ripCookie(){
     for (var j=0;j<cookie_divsS.length;j++){
         var cookie_divs=cookie_divsS[j]
     for (var i = 0, len = cookie_divs.length; i < len; ++i){
-        if((cookie_divs[i].innerHTML.indexOf("agree") !== -1 || cookie_divs[i].innerHTML.indexOf("okay") !== -1 || cookie_divs[i].innerHTML.indexOf("ok") !== -1 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1) && cookie_divs[i].clientHeight < 1000){
+        if((cookie_divs[i].innerHTML.indexOf("agree") !== -1 || cookie_divs[i].innerHTML.indexOf("okay") !== -1 || cookie_divs[i].innerHTML.indexOf("ok") !== -1 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1) && cookie_divs[i].clientHeight < 700){
             if($(cookie_divs[i]).height()<$(window).height())  //if happen to be a full screen overlay then just delete it
                 replaceElement($(cookie_divs[i]))
             else
@@ -43,7 +65,7 @@ setTimeout(function ripFullScreenOverlays(){
         }
     }
     for (var j=0; j<10;j++){
-        recursivePageSearchUpdated(document.body);
+        //recursivePageSearchUpdated(document.body);
     }
 }, 400);
 
@@ -58,6 +80,9 @@ function recursivePageSearchUpdated(x){
     }
 }
 
-
+jQuery.fn.rotate = function(degrees) {
+    $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
+    return $(this);
+};
 
 
