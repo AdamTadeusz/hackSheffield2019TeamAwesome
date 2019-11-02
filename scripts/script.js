@@ -1,49 +1,88 @@
-//alert("Hello from Hacksheffield Team!")
+function spookyElement(width,height,source){
+    return "<img id='myCanvas' width="+width+" height="+height+" src='"+source+"'></img>"
+}
+function replaceElement(jQElement){
+    var h = jQElement.height()
 
+    jQElement.css('height',h)
 
-// CODE HERE
-
-function cutCookie(){
-	var a = $(':contains("cookie"):not(:has(*))');
-	for( i = 1; i < a.length; i++) {
-		del_popup(a[i]);
-	}
-	function del_popup(b) {
-		console.log(b);
-		if (b.parent().is('body')) {
-			b.remove();
-		} else {
-			c = b.parent;
-			del_popup(c);
-		}
-	}
-	
-	function findElementByText(text) {
-    var jSpot = $("b:contains(" + text + ")")
-                .filter(function() { return $(this).children().length === 0;})
-                .parent();  // because you asked the parent of that element
-
-    return jSpot;
+    jQElement.html(spookyElement(jQElement.width(),h,'https://media1.tenor.com/images/2802f58da8fe7ef8ef1126f2f9801d2f/tenor.gif?itemid=8654420'))
+    spookyFadeAway(jQElement)
 }
 
-    jokerHtml= "<audio hidden id='audio' controls> <source src='https://cdn.discordapp.com/attachments/639852238789017642/640208884090273831/JOKER_LAUGH_2019_-_SHORT_VERSION.mp3' type='audio/mpeg'></audio>"
-    $("body").append(jokerHtml)
-    $('#audio')[0].play()
-    recursivePageSearch(document.getElementsByTagName("HTML")[0])
+function spookyJumpScare(x){
+    var node = document.createElement("IMG");
+    node.setAttribute("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvHz6zlhA0dMc5-TO9YoTvoQlecGOiJ4BCZDAFECCkDacqT_Dw&s");
+    x.appendChild(node);
+    //setTimeout(thingToSpook.removeChild(thingToSpook.children[-1]), 1000)
 }
-
-function recursivePageSearch(x){
-    numOfChild = x.childElementCount;
-    for (i = 0; i<numOfChild; i++){
-        //checkForCookie doesnt do anything, should be the part that verifies if text is part of cookie disclaimer
-        if (checkForCookie(x.childNodes[i]) == true){
-            //removeElement doesnt do anything, should remove the parent element or the parent's parent element
-            removeElement(x.childNodes[i]);
+function spookyFadeAway(jQElement){
+    var side = 'right';
+    var child = jQElement.children();
+    child.css('position','absolute');
+    
+    child.rotate(5)
+    rotateInterval = setInterval(function () { 
+        if(side=='right'){
+            child.rotate(-10)
+            side='left'
         }
-        recursivePageSearch(x.childNodes[i]);
-    }
-    children = x.childElementCount = document.getElementsByTagName("HTML")[0];
-    x.setAttribute("class","YEEET");
+        else{
+            child.rotate(10)
+            side='right'
+        }
+        child.animate({left: "+=50px",top:"+=50"});
+
+    },350)
+    setTimeout(function removeElement(){
+        jQElement.remove()
+    },5000)
 }
 
-window.onload = cutCookie();
+setTimeout(function ripCookie(){
+    var cookie_divsS = [$("div:contains('cookie')"), $("[id*='cookie']"),$("[class*='cookie']"),$("[title*='cookie']")]
+    console.log("howm:",$("div:contains('cookie')").length)
+    for (var j=0;j<cookie_divsS.length;j++){
+        var cookie_divs=cookie_divsS[j]
+    for (var i = 0, len = cookie_divs.length; i < len; ++i){
+        if((cookie_divs[i].innerHTML.indexOf("agree") !== -1 || cookie_divs[i].innerHTML.indexOf("okay") !== -1 || cookie_divs[i].innerHTML.indexOf("ok") !== -1 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1) && cookie_divs[i].clientHeight < 700){
+            if($(cookie_divs[i]).height()<$(window).height())  //if happen to be a full screen overlay then just delete it
+                replaceElement($(cookie_divs[i]))
+            else
+                cookie_divs[i].style.display = "none";
+
+        }
+    }}
+    console.log($(window).height())
+}, 300);
+
+setTimeout(function ripFullScreenOverlays(){
+    var bodyCH = $('body').children();
+
+    for (var i = 0, len = bodyCH.length; i < len; ++i){
+        if(parseInt($(bodyCH[i]).css('height'))==$(window).height()&&parseInt($(bodyCH[i]).css('width'))==$(window).width()){
+            bodyCH[i].style.display = "none";
+        }
+    }
+    for (var j=0; j<10;j++){
+        //recursivePageSearchUpdated(document.body);
+    }
+}, 400);
+
+function recursivePageSearchUpdated(x){
+    var children = x.children;
+    if (x.hasChildNodes()){
+        for (var i = 0; i<children.length; i++){
+            recursivePageSearchUpdated(x.children[i]);
+        }
+    }else{
+        spookyJumpScare(x);
+    }
+}
+
+jQuery.fn.rotate = function(degrees) {
+    $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
+    return $(this);
+};
+
+
