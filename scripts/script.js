@@ -40,5 +40,35 @@ function ripCookie(){
         }
     }
 }
-    
+
+/*
+function recursivePageSearchUpdated(x){
+    var children = x.children;
+    for (var i = 0; i<children.length; i++){
+        if (checkForCookie(x.childNodes[i]) == true){
+            if (x.nodeName == "DIV"){
+                recursivePageSearchUpdated(children[i]);
+            }else{
+                deleteCookie(x)
+            }
+        }
+    }
+}
+
+function checkForCookie(x){
+    if(x.innerHTML.indexOf("cookie") != -1){
+        return true
+    }else{
+        return false
+    }
+}
+
+function deleteCookie(x){
+    if(x.parentElement.nodeName != "BODY"){
+        deleteCookie(x.parentElement)
+    }else{
+        x.style.display = "none";
+    }
+}
+*/  
 ripCookie();
