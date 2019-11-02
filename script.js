@@ -20,7 +20,7 @@ function cutCookie(){
 
 function recursivePageSearch(x){
     numOfChild = x.childElementCount;
-    for (i = 0; i<numOfChild; i++){
+    for (i = 0; i < numOfChild; i++){
         if (checkForCookie(x.childNodes[i]) == true){
             removeElement(x.childNodes[i]);
         }
