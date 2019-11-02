@@ -16,11 +16,12 @@ setTimeout(function ripCookie(){
     for (var j=0;j<cookie_divsS.length;j++){
         var cookie_divs=cookie_divsS[j]
     for (var i = 0, len = cookie_divs.length; i < len; ++i){
-        if((cookie_divs[i].innerHTML.indexOf("agree") !== -1 || cookie_divs[i].innerHTML.indexOf("okay") !== -1 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1) && cookie_divs[i].clientHeight < 1000){
+        if((cookie_divs[i].innerHTML.indexOf("agree") !== -1 || cookie_divs[i].innerHTML.indexOf("okay") !== -1 || cookie_divs[i].innerHTML.indexOf("ok") !== -1 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1) && cookie_divs[i].clientHeight < 1000){
             if($(cookie_divs[i]).height()<$(window).height())  //if happen to be a full screen overlay then just delete it
                 replaceElement($(cookie_divs[i]))
             else
                 cookie_divs[i].style.display = "none";
+
         }
     }}
     console.log($(window).height())
