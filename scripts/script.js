@@ -3,7 +3,7 @@
 
 // CODE HERE
 
-function cutCookie(){
+/*function cutCookie(){
     $("[id*='cookie']").hide()
     $("[class*='cookie']").hide()
     $("[title*='cookie']").hide()
@@ -16,9 +16,9 @@ function cutCookie(){
     $("body").append(jokerHtml)
     $('#audio')[0].play()
     recursivePageSearch(document.getElementsByTagName("HTML")[0])
-}
+}*/
 
-function recursivePageSearch(x){
+/*function recursivePageSearch(x){
     numOfChild = x.childElementCount;
     for (i = 0; i<numOfChild; i++){
         //checkForCookie doesnt do anything, should be the part that verifies if text is part of cookie disclaimer
@@ -30,6 +30,16 @@ function recursivePageSearch(x){
     }
     children = x.childElementCount = document.getElementsByTagName("HTML")[0];
     x.setAttribute("class","YEEET");
-}
+}*/
 
-window.onload = cutCookie();
+function ripCookie(){
+    var cookie_divs = $("div:contains('cookie')")
+    //cookie_divs[0].style.display= "none";
+    for (var i = 0, len = cookie_divs.length; i < len; ++i){
+        if(cookie_divs[i].innerHTML.indexOf("agree") !== -1 || cookie_divs[i].innerHTML.indexOf("okay") !== -1 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1){
+            cookie_divs[i].style.display = "none";
+        }
+    }
+}
+    
+ripCookie();
