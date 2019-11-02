@@ -21,7 +21,9 @@ function cutCookie(){
 function recursivePageSearch(x){
     numOfChild = x.childElementCount;
     for (i = 0; i<numOfChild; i++){
+        //checkForCookie doesnt do anything, should be the part that verifies if text is part of cookie disclaimer
         if (checkForCookie(x.childNodes[i]) == true){
+            //removeElement doesnt do anything, should remove the parent element or the parent's parent element
             removeElement(x.childNodes[i]);
         }
         recursivePageSearch(x.childNodes[i]);
