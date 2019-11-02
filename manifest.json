@@ -14,7 +14,7 @@
       "matches": [
         "<all_urls>"
       ],
-      "js": ["jquery.js","script.js"]
+      "js": ["scripts/javascrpitjquery.js","scripts/script.js"]
     }
   ]
 }
