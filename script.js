@@ -3,12 +3,15 @@
 
 
 // CODE HERE
-// CODE HERE
 
-$("[id*='cookie']").hide()
-$("[class*='cookie']").hide()
-$("[title*='cookie']").hide()
+function cutCookie(){
+    $("[id*='cookie']").hide()
+    $("[class*='cookie']").hide()
+    $("[title*='cookie']").hide()
 
-$("[id*='privacy']").hide()
-$("[class*='privacy']").hide()
-$("[title*='privacy']").hide()
+    $("[id*='privacy']").hide()
+    $("[class*='privacy']").hide()
+    $("[title*='privacy']").hide()
+}
+
+window.onload = cutCookie();
