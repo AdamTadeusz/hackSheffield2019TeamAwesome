@@ -39,7 +39,11 @@ function spookyFadeAway(jQElement){
     },5000)
 }
 
+
 setTimeout(function ripCookie(){
+    chrome.storage.sync.get({
+                    spookyMode: false
+                  }, function(items) {
     var cookie_divsS = [$("div:contains('cookie')"), $("[id*='cookie']"),$("[class*='cookie']"),$("[title*='cookie']")]
     console.log("howm:",$("div:contains('cookie')").length)
     for (var j=0;j<cookie_divsS.length;j++){
@@ -49,7 +53,10 @@ setTimeout(function ripCookie(){
 
         if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 600 && $(cookie_divs[i]).children().length<4 && $(cookie_divs[i]).find($('form')).length == 0){
             if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
-                replaceElement($(cookie_divs[i]))
+                if (items.spookyMode)
+                    replaceElement($(cookie_divs[i]))
+                else
+                    cookie_divs[i].style.display = "none";
                 //console.log($(cookie_divs[i]))
             }
             else{
@@ -59,6 +66,7 @@ setTimeout(function ripCookie(){
 
         }
     }}
+});
     console.log($(window).height())
 }, 300);
 
@@ -90,3 +98,12 @@ jQuery.fn.rotate = function(degrees) {
     $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
     return $(this);
 };
+
+$( "#someResult" ).load( "chrome-extension://hmnkfkoapbdbicellginhnlcakapamjc/scripts/options.html", function() {
+  alert( "Load was performed." );
+  console.log($( "#someResult" ));
+});
+
+
+
+

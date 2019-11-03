@@ -18,5 +18,12 @@
       ],
       "js": ["scripts/jquery.js","scripts/script.js"]
     }
+  ],
+  "background": {
+    "scripts": ["scripts/background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "storage"
   ]
 }
