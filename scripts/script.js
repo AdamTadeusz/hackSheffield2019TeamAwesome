@@ -1,6 +1,10 @@
 function spookyElement(width,height,source){
     return "<img id='myCanvas' width="+width+" height="+height+" src='"+source+"'></img>"
 }
+
+var origin  = window.location.origin;
+console.log(origin)
+
 function replaceElement(jQElement){
     var h = jQElement.height()
 
@@ -39,35 +43,38 @@ function spookyFadeAway(jQElement){
     },5000)
 }
 
-
 setTimeout(function ripCookie(){
-    chrome.storage.sync.get({
-                    spookyMode: false
-                  }, function(items) {
-    var cookie_divsS = [$("div:contains('cookie')"), $("[id*='cookie']"),$("[class*='cookie']"),$("[title*='cookie']")]
-    console.log("howm:",$("div:contains('cookie')").length)
-    for (var j=0;j<cookie_divsS.length;j++){
-        var cookie_divs=cookie_divsS[j]
-    for (var i = 0, len = cookie_divs.length; i < len; ++i){
-        var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),a:contains("ok"),a:contains("okay"),a:contains("agree"),a:contains("cookie")'))
+    if(origin != "https://twitter.com" && origin != "https://www.google.com"){
+        chrome.storage.sync.get({
+                        spookyMode: false
+                    }, function(items) {
+        var cookie_divsS = [$("div:contains('cookie')"), $("[id*='cookie']"),$("[class*='cookie']"),$("[title*='cookie']")]
+        console.log("howm:",$("div:contains('cookie')").length)
+        for (var j=0;j<cookie_divsS.length;j++){
+            var cookie_divs=cookie_divsS[j]
+            for (var i = 0, len = cookie_divs.length; i < len; ++i){
+                var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),a:contains("ok"),a:contains("okay"),a:contains("agree")'))
 
-        if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 800 && $(cookie_divs[i]).children().length<4 && $(cookie_divs[i]).find($('form')).length == 0){
-            if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
-                if (items.spookyMode)
-                    replaceElement($(cookie_divs[i]))
-                else
-                    cookie_divs[i].style.display = "none";
-                //console.log($(cookie_divs[i]))
-            }
-            else{
-                cookie_divs[i].style.display = "none";
-                //console.log($(cookie_divs[i]))
-            }
+                if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 800 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
+                    if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
+                        if (items.spookyMode){
+                            replaceElement($(cookie_divs[i]))
+                        }else{
+                            cookie_divs[i].style.display = "none";
+                        }
+                        //console.log($(cookie_divs[i]))
+                    }
+                    else{
+                        cookie_divs[i].style.display = "none";
+                        //console.log($(cookie_divs[i]))
+                    }
 
+                }
+            }
         }
-    }}
-});
-    console.log($(window).height())
+        });
+        console.log($(window).height())
+    }
 }, 300);
 
 setTimeout(function ripFullScreenOverlays(){
@@ -94,11 +101,6 @@ function recursivePageSearchUpdated(x){
     }
 }
 
-chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-    console.log(tabs[0].url);
-});
-
-
 jQuery.fn.rotate = function(degrees) {
     $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
     return $(this);
@@ -108,7 +110,3 @@ $( "#someResult" ).load( "chrome-extension://hmnkfkoapbdbicellginhnlcakapamjc/sc
   alert( "Load was performed." );
   console.log($( "#someResult" ));
 });
-
-
-
-
