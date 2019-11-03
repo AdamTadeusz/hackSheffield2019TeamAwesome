@@ -4,7 +4,7 @@ function spookyElement(width,height,source){
 
 var origin  = window.location.origin;
 console.log(origin)
-whitelist = ["https://twitter.com","https://www.google.com","https://secure.devpost.com","https://www.instagram.com"];
+whitelist = ["https://twitter.com","https://www.google.com","https://secure.devpost.com","https://www.instagram.com","https://accounts.google.com"];
 
 function replaceElement(jQElement){
     var h = jQElement.height()
@@ -44,75 +44,52 @@ function spookyFadeAway(jQElement){
     },5000)
 }
 
-setTimeout(function ripCookie(){
-    if(whitelist.indexOf(origin) == -1){
-        chrome.storage.sync.get({
-                        spookyMode: false
-                    }, function(items) {
-        var cookie_divsS = [$("div:contains('cookie')"), $("[id*='cookie']"),$("[class*='cookie']"),$("[title*='cookie']")]
-        console.log("howm:",$("div:contains('cookie')").length)
-        for (var j=0;j<cookie_divsS.length;j++){
-            var cookie_divs=cookie_divsS[j]
-            for (var i = 0, len = cookie_divs.length; i < len; ++i){
-                var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),a:contains("ok"),a:contains("okay"),a:contains("agree")'))
+//setTimeout(ripCookie(), 2000);
+setTimeout(function(){ripCookie()},300);
+setTimeout(function(){ripCookie()},3000);
 
-                if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 800 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
-                    if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
-                        if (items.spookyMode){
-                            replaceElement($(cookie_divs[i]))
-                        }else{
-                            cookie_divs[i].style.display = "none";
-                        }
-                        //console.log($(cookie_divs[i]))
-                    }
-                    else{
-                        cookie_divs[i].style.display = "none";
-                        //console.log($(cookie_divs[i]))
-                    }
+setTimeout(ripFullScreenOverlays(), 400);
 
-                }
-            }
-        }
-        });
-        console.log($(window).height())
-    }
-}, 300);
-
-setTimeout(function ripFullScreenOverlays(){
+function ripFullScreenOverlays(){
+    console.log("ripFullScreenOverlays CALLED")
     if(whitelist.indexOf(origin) == -1){
         var bodyCH = $('body').children();
 
         for (var i = 0, len = bodyCH.length; i < len; ++i){
             if(parseInt($(bodyCH[i]).css('height'))==$(window).height()&&parseInt($(bodyCH[i]).css('width'))==$(window).width()&&$(bodyCH[i]).children().length<4){
                 bodyCH[i].style.display = "none";
+                //console.log("ripFullS",bodyCH[i])
             }
         }
         for (var j=0; j<10;j++){
             //recursivePageSearchUpdated(document.body);
         }
     }
-}, 400);
+}
 
 function ripCookie(){
-    if(origin != "https://twitter.com" && origin != "https://www.google.com" && origin != "https://secure.devpost.com"){
+    console.log("ripCookie CALLED")
+    if(whitelist.indexOf(origin) == -1){
         chrome.storage.sync.get({spookyMode: false}, function(items) {
             var cookie_divsS = [$("div:contains('cookie')"), $("[id*='cookie']"),$("[class*='cookie']"),$("[title*='cookie']")]
             console.log("howm:",$("div:contains('cookie')").length)
             for (var j=0;j<cookie_divsS.length;j++){
                 var cookie_divs=cookie_divsS[j]
-                for (var i = 0, len = cookie_divs.length; i < len; ++i){
-                    var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),button:contains("continue"),,button:contains("manage"),a:contains("ok"),a:contains("okay"),a:contains("agree")'))
+                for (var i = 0; i < cookie_divs.length; i++){
+                    var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),button:contains("continue"),button:contains("manage"),a:contains("ok"),a:contains("okay"),a:contains("agree"),a:contains("continue"),a:contains("manage")'))
 
-                    if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 800 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
+                    if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 600 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
                         if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
+
                             if (items.spookyMode){
                                 replaceElement($(cookie_divs[i]))
                             }else{
                                 cookie_divs[i].style.display = "none";
                             }
-                            //console.log($(cookie_divs[i]))
+                           // console.log("ripcookie",cookie_divs[i])
                         }
                         else{
+                            //console.log("ripcookie2",cookie_divs[i])
                             cookie_divs[i].style.display = "none";
                             //console.log($(cookie_divs[i]))
                         }
@@ -121,24 +98,11 @@ function ripCookie(){
                 }
             }
         });
-        console.log($(window).height())
+        //console.log($(window).height())
     }
 }
 
-setTimeout(function ripFullScreenOverlays(){
-    if(whitelist.indexOf(origin) == -1){
-        var bodyCH = $('body').children();
-        len = bodyCH.length;
-        for (var i = 0; i < len; ++i){
-            if(parseInt($(bodyCH[i]).css('height'))==$(window).height()&&parseInt($(bodyCH[i]).css('width'))==$(window).width()&&$(bodyCH[i]).children().length<4){
-                bodyCH[i].style.display = "none";
-            }
-        }
-        for (var j=0; j<10;j++){
-            //recursivePageSearchUpdated(document.body);
-        }
-    }
-},300);
+
 
 function recursivePageSearchUpdated(x){
     var children = x.children;
@@ -156,9 +120,4 @@ jQuery.fn.rotate = function(degrees) {
     return $(this);
 };
 
-$( "#someResult" ).load( "chrome-extension://hmnkfkoapbdbicellginhnlcakapamjc/scripts/options.html", function() {
-  alert( "Load was performed." );
-  console.log($( "#someResult" ));
-});
 
-setTimeout(function(){ripCookie()},5000);
