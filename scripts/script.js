@@ -76,7 +76,7 @@ function ripCookie(){
             for (var j=0;j<cookie_divsS.length;j++){
                 var cookie_divs=cookie_divsS[j]
                 for (var i = 0; i < cookie_divs.length; i++){
-                    var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),button:contains("continue"),button:contains("manage"),a:contains("ok"),a:contains("okay"),a:contains("agree"),a:contains("continue"),a:contains("manage")'))
+                    var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("got it"),button:contains("agree"),button:contains("cookie"),button:contains("continue"),button:contains("manage"),a:contains("got it"),a:contains("ok"),a:contains("okay"),a:contains("agree"),a:contains("continue"),a:contains("manage")'))
 
                     if( ( buttons.length > 0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 600 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
                         if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
@@ -86,7 +86,7 @@ function ripCookie(){
                             }else{
                                 cookie_divs[i].style.display = "none";
                             }
-                           // console.log("ripcookie",cookie_divs[i])
+                            //console.log("ripcookie",cookie_divs[i])
                         }
                         else{
                             //console.log("ripcookie2",cookie_divs[i])
