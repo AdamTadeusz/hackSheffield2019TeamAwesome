@@ -47,7 +47,7 @@ setTimeout(function ripCookie(){
     for (var i = 0, len = cookie_divs.length; i < len; ++i){
         var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),a:contains("ok"),a:contains("okay"),a:contains("agree"),a:contains("cookie")'))
 
-        if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 600 && $(cookie_divs[i]).children().length<4 && $(cookie_divs[i]).find($('form')).length == 0){
+        if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 800 && $(cookie_divs[i]).children().length<4 && $(cookie_divs[i]).find($('form')).length == 0){
             if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
                 replaceElement($(cookie_divs[i]))
                 //console.log($(cookie_divs[i]))
@@ -85,6 +85,11 @@ function recursivePageSearchUpdated(x){
         spookyJumpScare(x);
     }
 }
+
+chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+    console.log(tabs[0].url);
+});
+
 
 jQuery.fn.rotate = function(degrees) {
     $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
