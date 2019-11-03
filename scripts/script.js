@@ -72,10 +72,10 @@ setTimeout(function ripFullScreenOverlays(){
 function recursivePageSearchUpdated(x){
     var children = x.children;
     if (x.hasChildNodes()){
-        for (var i = 0; i<children.length; i++){
+        for (var i = 0; i < children.length; i++){
             recursivePageSearchUpdated(x.children[i]);
         }
-    }else{
+    } else {
         spookyJumpScare(x);
     }
 }
