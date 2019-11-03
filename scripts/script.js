@@ -44,7 +44,7 @@ function spookyFadeAway(jQElement){
 }
 
 setTimeout(function ripCookie(){
-    if(origin != "https://twitter.com" && origin != "https://www.google.com"){
+    if(origin != "https://twitter.com" && origin != "https://www.google.com" && origin != "https://secure.devpost.com"){
         chrome.storage.sync.get({
                         spookyMode: false
                     }, function(items) {
