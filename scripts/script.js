@@ -78,7 +78,7 @@ function ripCookie(){
                 for (var i = 0; i < cookie_divs.length; i++){
                     var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("agree"),button:contains("cookie"),button:contains("continue"),button:contains("manage"),a:contains("ok"),a:contains("okay"),a:contains("agree"),a:contains("continue"),a:contains("manage")'))
 
-                    if( ( buttons.length>0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 600 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
+                    if( ( buttons.length > 0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 600 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
                         if($(cookie_divs[i]).height()<$(window).height()){  //if happen to be a full screen overlay then just delete it
 
                             if (items.spookyMode){
