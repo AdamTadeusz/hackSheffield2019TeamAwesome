@@ -4,7 +4,7 @@ function spookyElement(width,height,source){
 
 var origin  = window.location.origin;
 console.log(origin)
-whitelist = ["https://twitter.com","https://www.google.com","https://secure.devpost.com","https://www.instagram.com","https://accounts.google.com"];
+whitelist = ["https://twitter.com","https://www.google.com","https://secure.devpost.com","https://www.instagram.com","https://accounts.google.com", "https://news.sky.com"];
 
 function replaceElement(jQElement){
     var h = jQElement.height()
@@ -56,7 +56,7 @@ function ripFullScreenOverlays(){
         var bodyCH = $('body').children();
 
         for (var i = 0, len = bodyCH.length; i < len; ++i){
-            if(parseInt($(bodyCH[i]).css('height'))==$(window).height()&&parseInt($(bodyCH[i]).css('width'))==$(window).width()&&$(bodyCH[i]).children().length<4){
+            if(parseInt($(bodyCH[i]).css('height'))==$(window).height()&&parseInt($(bodyCH[i]).css('width'))==$(window).width()&&$(bodyCH[i]).children().length<4   ){
                 bodyCH[i].style.display = "none";
                 //console.log("ripFullS",bodyCH[i])
             }
@@ -76,6 +76,7 @@ function ripCookie(){
             for (var j=0;j<cookie_divsS.length;j++){
                 var cookie_divs=cookie_divsS[j]
                 for (var i = 0; i < cookie_divs.length; i++){
+                    cookie_divs[i].classList.remove("full-screen-overlay");
                     var buttons= $(cookie_divs[i]).find($('button:contains("ok"),button:contains("okay"),button:contains("got it"),button:contains("agree"),button:contains("cookie"),button:contains("continue"),button:contains("manage"),a:contains("got it"),a:contains("ok"),a:contains("okay"),a:contains("agree"),a:contains("continue"),a:contains("manage")'))
 
                     if( ( buttons.length > 0 || cookie_divs[i].innerHTML.indexOf("privacy") !== -1 ) && cookie_divs[i].clientHeight < 600 && $(cookie_divs[i]).children().length <4 && $(cookie_divs[i]).find($('form')).length == 0){
